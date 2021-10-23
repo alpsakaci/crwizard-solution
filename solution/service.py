@@ -31,11 +31,11 @@ def is_files_equal(xml1, xml2):
 	else:
 		return False
 
-# TODO: run after auth
 def update_xml_if_changed(user):
 	xml = UserXmlFile.objects.filter(owner=user).first()
 
 	if xml is not None:
+		print('Checking xml file.')
 		xmlContent = get_link_content(xml.url)
 
 		if is_xml_valid(xmlContent):

@@ -4,6 +4,8 @@ from .forms import XmlFileLinkForm
 from .validator import is_xml_valid
 from .service import get_link_content, save_xml, send_mail, update_xml_if_changed
 from solution.models import UserXmlFile
+from django.dispatch.dispatcher import receiver
+from django.contrib.auth.signals import user_logged_in
 
 @login_required()
 def index(request):
@@ -25,3 +27,8 @@ def index(request):
 				context = {"form": form, "message": "The File is invalid! Please check your email."}
 
 	return render(request, "solution/index.html", context)
+
+@receiver(user_logged_in, dispatch_uid="unique")
+def user_logged_in(request, user, **kwargs):
+	print('User logged in.')
+	update_xml_if_changed(request.user)
