@@ -7,9 +7,17 @@
 	<title>Document</title>
 </head>
 <body>
+	Logged in as {{ user.username }} - {{ user.email }}
+	<br>
+	<br>
+	<a href="/accounts/logout?next=/">Logout</a>
+	<hr>
 	<form method="post">
 		{% csrf_token %}
 		{{ form }}
 		<input type="submit" value="Submit">
+	</form>
+	<br>
+	{{ message }}
 </body>
 </html>

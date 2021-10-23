@@ -1,4 +1,4 @@
 from django import forms
 
 class XmlFileLinkForm(forms.Form):
-    xmlFileLink = forms.CharField(label='XML File Link')
+    xmlFileLink = forms.URLField(label='XML File Link')
