@@ -24,3 +24,4 @@ urllib3==1.26.7
 validators==0.18.2
 wheel==0.36.2
 django-environ
+gunicorn==20.1.0

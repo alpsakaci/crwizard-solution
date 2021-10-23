@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    web:
+      container_name: crwizard_solution
+      restart: always
+      build: .
+      command: gunicorn crwizard_solution.wsgi:application --bind 0.0.0.0:8000 --workers=4
+      volumes:
+        - ./data:/usr/src/app/data
+        - staticfiles:/usr/src/app/staticfiles
+      environment:
+        SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: ${SOCIAL_AUTH_GOOGLE_OAUTH2_KEY}
+        SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: ${SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET}
+        EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+        EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+
+    nginx:
+      container_name: nginx
+      image: nginx:mainline-alpine
+      restart: always
+      ports:
+        - 80:80
+      volumes:
+        - staticfiles:/usr/src/app/staticfiles
+        - ./nginx:/etc/nginx/conf.d        
+      depends_on:
+        - web
+      restart: always
+
+volumes:
+    staticfiles:
