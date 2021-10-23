@@ -2,6 +2,7 @@ import requests
 from solution.models import UserXmlFile
 import hashlib
 from solution.validator import is_xml_valid
+from lxml import etree
 
 def get_link_content(link):
 	try:
@@ -15,6 +16,21 @@ def save_xml(user, url, xmlContent):
 	user_xml.url = url
 	user_xml.xmlContent = xmlContent
 	user_xml.save()
+
+def get_summary(xmlContent):
+	element_tree = etree.fromstring(bytes(xmlContent, 'utf8'))
+	changed = 0
+	for element in element_tree:
+		el = element
+		while len(el) is not 0:
+			el = el[0]
+		if el.text.__contains__("Blue"):
+			el.text.replace("Blue", "Red")
+			changed = changed + 1
+
+	summary = f"The XML has {len(element_tree)} node. {changed} element replaced from Blue to Red"
+
+	return (etree.tostring(element_tree), summary)
 
 def hash_str(value):
     md5 = hashlib.new('md5')

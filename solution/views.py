@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from solution.forms import XmlFileLinkForm
 from solution.validator import is_xml_valid
-from solution.service import get_link_content, save_xml, update_xml_if_changed
+from solution.service import get_link_content, save_xml, update_xml_if_changed, get_summary
 from solution.models import UserXmlFile
 from django.dispatch.dispatcher import receiver
 from django.contrib.auth.signals import user_logged_in
@@ -22,6 +22,11 @@ def index(request):
 
 			if is_xml_valid(xmlContent):
 				save_xml(request.user, xmlFileLink, xmlContent)
+				xml, summary = get_summary(xmlContent)
+				print(summary)
+				send_email("Here is your summary.", 
+							summary,
+							request.user.email)
 				context = {"form": form, "message": "XML File is valid. Saved to database."}
 			else:
 				send_email("Oops! An error occurred.", 
