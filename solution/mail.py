@@ -3,5 +3,5 @@ from django.http import HttpResponse
 
 def send_email(subject, body, mail_to):
 	print('Sending mail')
-	res = send_mail(subject, body, "erenalpsakaci@gmail.com", [mail_to])
-	return HttpResponse('%s'%res)
+	response = send_mail(subject, body, "erenalpsakaci@gmail.com", [mail_to])
+	return response

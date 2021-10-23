@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-#o1$avhp*xi8t08ehvhnx&t-_%a4xo^%xf5(4dkoq4$5c(*i3s
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS_LIST = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'crwizard_solution.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'data/db.sqlite3',
     }
 }
 
@@ -111,3 +111,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'erenalpsakaci@gmail.com'
+EMAIL_HOST_PASSWORD = ''
